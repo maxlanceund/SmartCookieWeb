@@ -1,0 +1,25 @@
+name: Build SmartCookieWeb APK
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleScMainDebug --no-daemon
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: smartcookieweb-apk
+          path: app/build/outputs/apk/scMain/debug/*.apk
+          if-no-files-found: error

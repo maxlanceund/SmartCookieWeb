@@ -257,6 +257,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         2 -> resources.getString(R.string.agent_desktop)
         3 -> resources.getString(R.string.agent_mobile)
         4 -> resources.getString(R.string.agent_custom)
+        5 -> resources.getString(R.string.agent_fake)
         else -> resources.getString(R.string.agent_default)
     }
 

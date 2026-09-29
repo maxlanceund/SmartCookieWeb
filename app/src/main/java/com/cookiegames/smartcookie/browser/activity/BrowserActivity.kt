@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.ClipboardManager
 import android.content.Context
+import android.widget.Toast
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
@@ -477,6 +478,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         customView.findViewById<FrameLayout>(R.id.more_button).setOnClickListener(this)
         customView.findViewById<FrameLayout>(R.id.download_button).setOnClickListener(this)
+        customView.findViewById<FrameLayout>(R.id.fake_ua_button).setOnClickListener(this)
 
         // create the search EditText in the ToolBar
         searchView = customView.findViewById<SearchView>(R.id.search).apply {
@@ -2192,6 +2194,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 searchView?.hasFocus() == true -> currentTab.requestFocus()
                 shouldShowTabsInDrawer -> binding.drawerLayout.openDrawer(getTabDrawer())
                 else -> currentTab.loadHomePage()
+            }
+            R.id.fake_ua_button -> {
+                val fakePrefs = getSharedPreferences("smartcookie_fake", Context.MODE_PRIVATE)
+                val wasFake = fakePrefs.getBoolean("fake_ua", false)
+                fakePrefs.edit().putBoolean("fake_ua", !wasFake).apply()
+                Toast.makeText(this, if (!wasFake) "伪装 UA 已开启" else "伪装 UA 已关闭", Toast.LENGTH_SHORT).show()
+                tabsManager.currentTab?.reload()
             }
             R.id.more_button -> {
                 popUpClass.showPopupWindow(v, this)

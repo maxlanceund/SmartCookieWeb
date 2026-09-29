@@ -5,6 +5,7 @@
         <item>@string/agent_desktop</item>
         <item>@string/agent_mobile</item>
         <item>@string/agent_custom</item>
+        <item>@string/agent_fake</item>
     </string-array>
 
     <string-array name="blocked_sites">
